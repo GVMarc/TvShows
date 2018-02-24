@@ -1,7 +1,9 @@
-package com.gvmarc.tvshows;
+package com.gvmarc.tvshows.presentation.home;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.gvmarc.tvshows.R;
 
 public class HomeActivity extends AppCompatActivity {
 
