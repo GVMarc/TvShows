@@ -28,6 +28,8 @@
             android:name=".presentation.home.HomeActivity"
             android:label="@string/home_activity" />
 
+        <activity android:name=".presentation.details.TvShowDetailsActivity" />
+
     </application>
 
 </manifest>

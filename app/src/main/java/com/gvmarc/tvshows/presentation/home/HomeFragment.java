@@ -15,7 +15,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.gvmarc.tvshows.R;
 import com.gvmarc.tvshows.data.entity.TvShowEntity;
@@ -30,7 +29,7 @@ import butterknife.ButterKnife;
 public class HomeFragment extends Fragment implements HomeView {
 
     @LayoutRes
-    int layout = R.layout.fragment_home;
+    private final int layout = R.layout.fragment_home;
 
     private final static int PHONE_COLUMNS = 2;
     private final static int TABLET_COLUMNS = 3;

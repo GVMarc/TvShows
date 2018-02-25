@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 public class SplashScreenActivity extends AppCompatActivity implements SplashScreenView {
 
     @LayoutRes
-    private int layout = R.layout.activity_splash_screen;
+    private final int layout = R.layout.activity_splash_screen;
 
     private static final int MIN_SPLASH_TIME = 2 * 1000;
 
