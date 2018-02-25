@@ -1,15 +1,19 @@
 package com.gvmarc.tvshows.presentation.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gvmarc.tvshows.R;
 import com.gvmarc.tvshows.data.entity.TvShowEntity;
+import com.gvmarc.tvshows.util.ImageUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -44,7 +48,17 @@ public class TvShowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         TvShowViewHolder tvShowViewHolder = (TvShowViewHolder) holder;
 
+        Context context = tvShowViewHolder.view.getContext();
+
         tvShowViewHolder.title.setText(tvShow.getName());
+
+        Picasso.with(context).load(
+                ImageUtil.getImageBaseUrl(ImageUtil.Size.COVER) + tvShow.getPosterPath())
+                .placeholder(R.color.accent)
+                .into(tvShowViewHolder.cover);
+
+        tvShowViewHolder.voteAverage.setText(String.valueOf(tvShow.getVoteAverage()));
+        tvShowViewHolder.progressBar.setProgress((int) (tvShow.getVoteAverage() * 10));
     }
 
     public void setNewList(List<TvShowEntity> tvShowList) {
@@ -66,6 +80,12 @@ public class TvShowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         @BindView(R.id.title)
         TextView title;
+
+        @BindView(R.id.vote_average)
+        TextView voteAverage;
+
+        @BindView(R.id.vote_average_progressbar)
+        ProgressBar progressBar;
 
         TvShowViewHolder(View v) {
             super(v);

@@ -3,28 +3,31 @@ package com.gvmarc.tvshows.presentation.home;
 import com.gvmarc.tvshows.data.entity.TvShowListEntity;
 import com.gvmarc.tvshows.domain.usecase.GetTvShowsUseCase;
 
-public class HomePresenter implements IHomePresenter {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    private HomeView homeView;
-    private GetTvShowsUseCase getTvShowsUseCase;
+public class HomePresenter implements Callback<TvShowListEntity> {
+
+    private HomeView mHomeView;
+    private GetTvShowsUseCase mGetTvShowsUseCase;
 
     public HomePresenter(HomeView homeView) {
-        this.homeView = homeView;
-        getTvShowsUseCase = new GetTvShowsUseCase(this);
+        mHomeView = homeView;
+        mGetTvShowsUseCase = new GetTvShowsUseCase(this);
     }
 
     public void requestTvShows(int page) {
-        getTvShowsUseCase.onTvShowsRequested(page);
-    }
-
-
-    @Override
-    public void onTvShowsResponse(TvShowListEntity tvShowListEntity) {
-        homeView.addTvShowsToGrid(tvShowListEntity);
+        mGetTvShowsUseCase.onTvShowsRequested(page);
     }
 
     @Override
-    public void onTvShowsFailure() {
-        homeView.onNetworkError();
+    public void onResponse(Call<TvShowListEntity> call, Response<TvShowListEntity> response) {
+        mHomeView.addTvShowsToGrid(response.body());
+    }
+
+    @Override
+    public void onFailure(Call call, Throwable t) {
+        mHomeView.onNetworkError();
     }
 }

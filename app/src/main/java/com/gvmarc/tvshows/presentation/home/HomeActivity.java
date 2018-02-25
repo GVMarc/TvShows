@@ -1,5 +1,7 @@
 package com.gvmarc.tvshows.presentation.home;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +21,10 @@ public class HomeActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
     private HomeFragment mHomeFragment;
+
+    public static Intent buildIntent(Context context) {
+        return new Intent(context, HomeActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

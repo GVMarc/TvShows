@@ -1,8 +1,8 @@
 package com.gvmarc.tvshows.data.api;
 
 
-import com.gvmarc.tvshows.BuildConfig;
-import com.gvmarc.tvshows.data.entity.TvShowListEntity;
+import com.gvmarc.tvshows.data.entity.ConfigurationEntity;
+import com.gvmarc.tvshows.util.AppConstants;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -10,11 +10,11 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TvShowsApiClient {
+public class TheMovieDbApiClient {
 
-    private final TvShowsApiService apiService;
+    private final TheMovieDbApiService apiService;
 
-    public TvShowsApiClient() {
+    public TheMovieDbApiClient() {
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor()
@@ -22,15 +22,19 @@ public class TvShowsApiClient {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(AppConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
 
-        apiService = retrofit.create(TvShowsApiService.class);
+        apiService = retrofit.create(TheMovieDbApiService.class);
     }
 
-    public void getPopularTvShows(int page, Callback<TvShowListEntity> callback) {
-        apiService.tvPopular(page).enqueue(callback);
+    public void getPopularTvShows(int page, Callback callback) {
+        apiService.getPopularTvShows(page).enqueue(callback);
+    }
+
+    public void getConfiguration(Callback<ConfigurationEntity> callback) {
+        apiService.getConfiguration().enqueue(callback);
     }
 }

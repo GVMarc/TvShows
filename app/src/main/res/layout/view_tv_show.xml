@@ -35,32 +35,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginTop="@dimen/tv_show_footer_margin"
+            android:gravity="center_vertical|end"
             android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/vote_average_progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="@dimen/vote_progress_width"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/tv_show_footer_margin"
+                android:layout_marginRight="@dimen/tv_show_footer_margin"
+                android:max="100" />
 
             <TextView
                 android:id="@+id/vote_average"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"
                 android:background="@color/tv_show_footer_background"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="2"
                 android:textColor="@color/text_primary"
-                android:textSize="@dimen/tv_show_footer_title"
+                android:textSize="@dimen/tv_show_footer_vote"
+                android:textStyle="bold"
                 tools:text="75" />
-
-            <ProgressBar
-                android:id="@+id/vote_average_progressbar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:max="100"
-                android:progress="75" />
 
         </LinearLayout>
 
