@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gvmarc.tvshows.R;
-import com.gvmarc.tvshows.data.entity.TvShowEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 import com.gvmarc.tvshows.presentation.base.Navigator;
 import com.gvmarc.tvshows.util.ImageUtil;
 import com.squareup.picasso.Picasso;

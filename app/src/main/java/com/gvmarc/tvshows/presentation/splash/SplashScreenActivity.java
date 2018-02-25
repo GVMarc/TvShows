@@ -8,8 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.gvmarc.tvshows.R;
-import com.gvmarc.tvshows.data.entity.ConfigurationEntity;
-import com.gvmarc.tvshows.data.entity.ImagesConfigEntity;
+import com.gvmarc.tvshows.data.entity.config.ConfigurationEntity;
+import com.gvmarc.tvshows.data.entity.config.ImagesConfigEntity;
 import com.gvmarc.tvshows.presentation.base.Navigator;
 import com.gvmarc.tvshows.util.AppConstants;
 import com.gvmarc.tvshows.util.ImageUtil;
@@ -67,7 +67,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
     }
 
     @Override
-    public void onNetworkError() {
+    public void showNetworkError() {
         mConfigIsReady = true;
         checkIsReadyToNavigate();
     }

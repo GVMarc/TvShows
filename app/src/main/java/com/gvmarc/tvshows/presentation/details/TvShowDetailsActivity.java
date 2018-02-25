@@ -8,14 +8,18 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gvmarc.tvshows.R;
+import com.gvmarc.tvshows.data.entity.details.TvShowDetailsEntity;
+import com.gvmarc.tvshows.util.ImageUtil;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TvShowDetailsActivity extends AppCompatActivity {
+public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDetailsView {
 
     @LayoutRes
     private final int layout = R.layout.activity_tvshow_details;
@@ -26,8 +30,13 @@ public class TvShowDetailsActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.title)
-    TextView mTitle;
+    @BindView(R.id.overview)
+    TextView mOverview;
+
+    @BindView(R.id.image)
+    ImageView mImage;
+
+    private TvShowDetailsPresenter mTvShowDetailsPresenter;
 
     private int mTvShowId;
     private String mTvShowName;
@@ -47,6 +56,12 @@ public class TvShowDetailsActivity extends AppCompatActivity {
 
         getArguments();
         initViews();
+        mTvShowDetailsPresenter = new TvShowDetailsPresenter(this);
+        requestTvShowDetails();
+    }
+
+    private void requestTvShowDetails() {
+        mTvShowDetailsPresenter.requestTvShowDetails(mTvShowId);
     }
 
     private void getArguments() {
@@ -59,7 +74,6 @@ public class TvShowDetailsActivity extends AppCompatActivity {
 
     private void initViews() {
         initToolbar();
-        mTitle.setText("" + mTvShowId);
     }
 
     private void initToolbar() {
@@ -75,5 +89,18 @@ public class TvShowDetailsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void showDetails(TvShowDetailsEntity tvShowDetails) {
+        String imageUrl = ImageUtil.getImageBaseUrl(ImageUtil.Size.ORIGINAL)
+                + tvShowDetails.getBackdropPath();
+        Picasso.with(this).load(imageUrl).placeholder(R.color.accent).into(mImage);
+        mOverview.setText(tvShowDetails.getOverview());
+    }
+
+    @Override
+    public void showNetworkError() {
+
     }
 }

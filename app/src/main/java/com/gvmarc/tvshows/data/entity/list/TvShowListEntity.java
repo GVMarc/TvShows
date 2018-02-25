@@ -1,4 +1,4 @@
-package com.gvmarc.tvshows.data.entity;
+package com.gvmarc.tvshows.data.entity.list;
 
 
 import com.google.gson.annotations.SerializedName;

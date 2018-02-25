@@ -21,13 +21,13 @@ public class ImageUtil {
     }
 
     public static String getCoverSize(List<String> sizeList) {
-        int midResolution = sizeList.size() / 2;
+        int midResolution = 4;
         return sizeList.get(midResolution);
     }
 
     public static String getOriginalSize(List<String> sizeList) {
-        int midResolution = sizeList.size() - 1;
-        return sizeList.get(midResolution);
+        int highResolution = 5;
+        return sizeList.get(highResolution);
     }
 
 }

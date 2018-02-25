@@ -17,8 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gvmarc.tvshows.R;
-import com.gvmarc.tvshows.data.entity.TvShowEntity;
-import com.gvmarc.tvshows.data.entity.TvShowListEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowListEntity;
 import com.gvmarc.tvshows.presentation.adapter.TvShowAdapter;
 
 import java.util.List;
@@ -149,7 +149,7 @@ public class HomeFragment extends Fragment implements HomeView {
     }
 
     @Override
-    public void addTvShowsToGrid(TvShowListEntity tvShowListEntity) {
+    public void addTvShows(TvShowListEntity tvShowListEntity) {
 
         LoadingType loadingType = LoadingType.REFRESH;
         if (tvShowListEntity != null) {
@@ -170,7 +170,7 @@ public class HomeFragment extends Fragment implements HomeView {
     }
 
     @Override
-    public void onNetworkError() {
+    public void showNetworkError() {
         Snackbar.make(getView(), R.string.connection_error, Snackbar.LENGTH_LONG).show();
         setLoading(false, LoadingType.REFRESH);
         setLoading(false, LoadingType.BOTTOM);

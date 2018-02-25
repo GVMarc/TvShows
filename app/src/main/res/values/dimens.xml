@@ -12,4 +12,7 @@
     <dimen name="tv_show_footer_vote">20sp</dimen>
     <dimen name="tv_show_footer_margin">8dp</dimen>
     <dimen name="vote_progress_width">60dp</dimen>
+
+    <!--Details-->
+    <dimen name="details_footer_padding">16dp</dimen>
 </resources>

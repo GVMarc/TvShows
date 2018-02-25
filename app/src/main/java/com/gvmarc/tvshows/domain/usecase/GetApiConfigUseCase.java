@@ -2,7 +2,7 @@ package com.gvmarc.tvshows.domain.usecase;
 
 
 import com.gvmarc.tvshows.data.api.TheMovieDbApiClient;
-import com.gvmarc.tvshows.data.entity.ConfigurationEntity;
+import com.gvmarc.tvshows.data.entity.config.ConfigurationEntity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
