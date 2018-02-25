@@ -6,5 +6,5 @@ import com.gvmarc.tvshows.data.entity.TvShowListEntity;
 
 public interface IHomePresenter {
     void onTvShowsResponse(TvShowListEntity tvShowListEntity);
-    void onTvShowsFailure(String message);
+    void onTvShowsFailure();
 }

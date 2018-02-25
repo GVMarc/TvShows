@@ -20,11 +20,11 @@ public class HomePresenter implements IHomePresenter {
 
     @Override
     public void onTvShowsResponse(TvShowListEntity tvShowListEntity) {
-        homeView.fillTvShowGrid(tvShowListEntity);
+        homeView.addTvShowsToGrid(tvShowListEntity);
     }
 
     @Override
-    public void onTvShowsFailure(String message) {
-        homeView.onError(message);
+    public void onTvShowsFailure() {
+        homeView.onNetworkError();
     }
 }

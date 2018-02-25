@@ -52,6 +52,11 @@ public class TvShowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
 
+    public void addTvShows(List<TvShowEntity> tvShowList) {
+        mTvShowList.addAll(tvShowList);
+        notifyDataSetChanged();
+    }
+
     static class TvShowViewHolder extends RecyclerView.ViewHolder {
 
         View view;

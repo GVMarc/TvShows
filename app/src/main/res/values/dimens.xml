@@ -7,4 +7,6 @@
     <dimen name="tv_show_footer_padding">8dp</dimen>
     <dimen name="tv_show_footer_title">16sp</dimen>
     <dimen name="tv_show_view_margin">2dp</dimen>
+    <dimen name="bottom_loading_margin">8dp</dimen>
+    <dimen name="tv_show_cover_placeholder">24dp</dimen>
 </resources>

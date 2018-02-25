@@ -27,7 +27,7 @@ public class GetTvShowsUseCase {
 
             @Override
             public void onFailure(Call<TvShowListEntity> call, Throwable t) {
-                listener.onTvShowsFailure(t.getMessage());
+                listener.onTvShowsFailure();
             }
         });
     }

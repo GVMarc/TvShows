@@ -1,5 +1,6 @@
 package com.gvmarc.tvshows.presentation.home;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.gvmarc.tvshows.R;
 import com.gvmarc.tvshows.data.entity.TvShowEntity;
@@ -30,15 +32,31 @@ public class HomeFragment extends Fragment implements HomeView {
     @LayoutRes
     int layout = R.layout.fragment_home;
 
+    private final static int PHONE_COLUMNS = 2;
+    private final static int TABLET_COLUMNS = 3;
+    private final static int FIRST_PAGE = 1;
+    private final static int LAST_ROWS_TO_LOAD_MORE_TVSHOWS = 3;
+
+    public enum LoadingType {
+        REFRESH,
+        BOTTOM
+    }
+
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mRefreshLayout;
+
     @BindView(R.id.tv_show_grid)
     RecyclerView mTvShowRecyclerView;
 
-    int page = 1;
+    @BindView(R.id.bottom_loading)
+    View mBottomLoading;
+
+    private int mPagination = FIRST_PAGE;
+    private int mColumns;
+
+    private boolean mIsLoading;
 
     private HomePresenter mPresenter;
-
     private StaggeredGridLayoutManager mLayoutManager;
     private TvShowAdapter mTvShowAdapter;
 
@@ -59,6 +77,7 @@ public class HomeFragment extends Fragment implements HomeView {
 
         mPresenter = new HomePresenter(this);
         requestTvShows();
+        setLoading(true, LoadingType.REFRESH);
 
         return view;
     }
@@ -77,47 +96,106 @@ public class HomeFragment extends Fragment implements HomeView {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //TODO
+                onTvShowGridRefreshed();
             }
         });
     }
 
 
     private void initRecyclerView() {
+        mTvShowRecyclerView.setHasFixedSize(true);
+
+        mColumns = PHONE_COLUMNS;
+        boolean isTablet = getResources().getBoolean(R.bool.is_tablet);
+        if (isTablet) {
+            mColumns = TABLET_COLUMNS;
+        }
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mColumns *= 2;
+        }
+
         mLayoutManager = new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
         mTvShowRecyclerView.setLayoutManager(mLayoutManager);
 
         mTvShowRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                //TODO
+                onTvShowGridScrolled();
             }
         });
     }
 
-    private void requestTvShows() {
-        mPresenter.requestTvShows(page);
-    }
+    private void onTvShowGridScrolled() {
+        int totalItemCount = mLayoutManager.getItemCount();
+        int[] lastVisibleItems = new int[mColumns];
+        mLayoutManager.findLastVisibleItemPositions(lastVisibleItems);
 
-    @Override
-    public void fillTvShowGrid(TvShowListEntity tvShowListEntity) {
+        int lastVisibleItemsToLoad = mColumns * LAST_ROWS_TO_LOAD_MORE_TVSHOWS;
 
-        if (tvShowListEntity != null) {
-
-            List<TvShowEntity> tvShowList = tvShowListEntity.getResults();
-
-            if (tvShowList != null && !tvShowList.isEmpty())
-                if (mTvShowAdapter == null) {
-                    mTvShowAdapter = new TvShowAdapter(tvShowList);
-                    mTvShowRecyclerView.setAdapter(mTvShowAdapter);
-                } else {
-                    mTvShowAdapter.setNewList(tvShowList);
-                }
+        if (!mIsLoading && totalItemCount <= lastVisibleItems[0] + lastVisibleItemsToLoad) {
+            requestTvShows();
+            setLoading(true, LoadingType.BOTTOM);
         }
     }
 
+    private void onTvShowGridRefreshed() {
+        resetPagination();
+        requestTvShows();
+        setLoading(true, LoadingType.REFRESH);
+    }
+
+    private void requestTvShows() {
+        mPresenter.requestTvShows(mPagination);
+        mPagination++;
+    }
+
     @Override
-    public void onError(String message) {
-        Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE).show();
+    public void addTvShowsToGrid(TvShowListEntity tvShowListEntity) {
+
+        LoadingType loadingType = LoadingType.REFRESH;
+        if (tvShowListEntity != null) {
+            List<TvShowEntity> tvShowList = tvShowListEntity.getResults();
+            if (tvShowList != null && !tvShowList.isEmpty()) {
+                if (mTvShowAdapter == null) {
+                    mTvShowAdapter = new TvShowAdapter(tvShowList);
+                    mTvShowRecyclerView.setAdapter(mTvShowAdapter);
+                } else if (tvShowListEntity.getPage() == FIRST_PAGE) {
+                    mTvShowAdapter.setNewList(tvShowList);
+                } else {
+                    mTvShowAdapter.addTvShows(tvShowList);
+                    loadingType = LoadingType.BOTTOM;
+                }
+            }
+        }
+        setLoading(false, loadingType);
+    }
+
+    @Override
+    public void onNetworkError() {
+        Snackbar.make(getView(), R.string.connection_error, Snackbar.LENGTH_LONG).show();
+        setLoading(false, LoadingType.REFRESH);
+        setLoading(false, LoadingType.BOTTOM);
+    }
+
+    private void setLoading(boolean loading, LoadingType loadingType) {
+        mIsLoading = loading;
+        if (loadingType == LoadingType.REFRESH) {
+            showRefreshLayoutLoading(loading);
+        } else {
+            showBottomLoading(loading);
+        }
+    }
+
+    private void showBottomLoading(boolean show) {
+        int visibility = show ? View.VISIBLE : View.GONE;
+        mBottomLoading.setVisibility(visibility);
+    }
+
+    private void showRefreshLayoutLoading(boolean show) {
+        mRefreshLayout.setRefreshing(show);
+    }
+
+    private void resetPagination() {
+        mPagination = FIRST_PAGE;
     }
 }
