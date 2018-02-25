@@ -1,3 +1,9 @@
 <resources>
+    <!--App-->
     <string name="app_name">TvShows</string>
+
+    <!--Activities-->
+    <string name="home_activity">TV shows</string>
+    <string name="tv_show_cover">Cover of tv show</string>
+
 </resources>
