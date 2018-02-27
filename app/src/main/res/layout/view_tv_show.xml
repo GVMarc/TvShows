@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/tv_show_view_margin"
+    android:layout_margin="@dimen/item_view_margin"
     android:orientation="vertical">
 
     <ImageView
@@ -11,15 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
+        android:background="@color/item_background"
         android:contentDescription="@string/tv_show_cover"
-        android:src="@color/accent" />
+        android:minHeight="@dimen/item_image_min_height" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/tv_show_footer_background"
         android:orientation="vertical"
-        android:padding="@dimen/tv_show_footer_padding">
+        android:padding="@dimen/item_footer_padding">
 
         <TextView
             android:id="@+id/title"
@@ -29,24 +30,24 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/text_primary"
-            android:textSize="@dimen/tv_show_footer_title"
+            android:textSize="@dimen/item_footer_title"
             tools:text="Title with example to see two lines lorem ipsum " />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/tv_show_footer_margin"
+            android:layout_marginTop="@dimen/item_footer_margin"
             android:gravity="center_vertical|end"
             android:orientation="horizontal">
 
             <ProgressBar
                 android:id="@+id/vote_average_progressbar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="@dimen/vote_progress_width"
+                android:layout_width="@dimen/item_vote_progress_width"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/tv_show_footer_margin"
-                android:layout_marginRight="@dimen/tv_show_footer_margin"
+                android:layout_marginEnd="@dimen/item_footer_margin"
+                android:layout_marginRight="@dimen/item_footer_margin"
                 android:max="100" />
 
             <TextView
@@ -59,7 +60,7 @@
                 android:gravity="center"
                 android:maxLines="2"
                 android:textColor="@color/text_primary"
-                android:textSize="@dimen/tv_show_footer_vote"
+                android:textSize="@dimen/item_footer_vote"
                 android:textStyle="bold"
                 tools:text="75" />
 

@@ -9,5 +9,7 @@
 
     <!--Details-->
     <string name="tv_show_image">Image of the tv show</string>
+    <string name="seasons">Seasons:</string>
+    <string name="episodes">Episodes:</string>
 
 </resources>

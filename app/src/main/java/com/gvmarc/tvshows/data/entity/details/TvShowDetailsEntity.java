@@ -15,6 +15,16 @@ public class TvShowDetailsEntity implements Serializable {
     @SerializedName("overview")
     private String overview;
 
+    @SerializedName("number_of_episodes")
+    private int numberOfEpisodes;
+
+    @SerializedName("number_of_seasons")
+    private int numberOfSeasons;
+
+    @SerializedName("vote_average")
+    private float voteAverage;
+
+    @Nullable
     public String getBackdropPath() {
         return backdropPath;
     }
@@ -23,7 +33,19 @@ public class TvShowDetailsEntity implements Serializable {
         return overview;
     }
 
-//    @SerializedName("created_by")
+    public int getNumberOfEpisodes() {
+        return numberOfEpisodes;
+    }
+
+    public int getNumberOfSeasons() {
+        return numberOfSeasons;
+    }
+
+    public float getVoteAverage() {
+        return voteAverage;
+    }
+
+    //    @SerializedName("created_by")
 //    private List<CreatedBy> createdBy;
 //
 //    @SerializedName("episode_run_time")
@@ -56,11 +78,6 @@ public class TvShowDetailsEntity implements Serializable {
 //    @SerializedName("networks")
 //    private List<Network> networks;
 //
-//    @SerializedName("number_of_episodes")
-//    private Integer numberOfEpisodes;
-//
-//    @SerializedName("number_of_seasons")
-//    private Integer numberOfSeasons;
 //
 //    @SerializedName("origin_country")
 //    private List<String> originCountry;
@@ -89,8 +106,6 @@ public class TvShowDetailsEntity implements Serializable {
 //    @SerializedName("type")
 //    private String type;
 //
-//    @SerializedName("vote_average")
-//    private Integer voteAverage;
 //
 //    @SerializedName("vote_count")
 //    private Integer voteCount;

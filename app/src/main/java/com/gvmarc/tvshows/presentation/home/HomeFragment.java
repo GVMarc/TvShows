@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import com.gvmarc.tvshows.R;
 import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 import com.gvmarc.tvshows.data.entity.list.TvShowListEntity;
-import com.gvmarc.tvshows.presentation.adapter.TvShowAdapter;
 
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class HomeFragment extends Fragment implements HomeView {
 
     private HomePresenter mPresenter;
     private StaggeredGridLayoutManager mLayoutManager;
-    private TvShowAdapter mTvShowAdapter;
+    private HomeAdapter mHomeAdapter;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -155,13 +154,13 @@ public class HomeFragment extends Fragment implements HomeView {
         if (tvShowListEntity != null) {
             List<TvShowEntity> tvShowList = tvShowListEntity.getResults();
             if (tvShowList != null && !tvShowList.isEmpty()) {
-                if (mTvShowAdapter == null) {
-                    mTvShowAdapter = new TvShowAdapter(tvShowList);
-                    mTvShowRecyclerView.setAdapter(mTvShowAdapter);
+                if (mHomeAdapter == null) {
+                    mHomeAdapter = new HomeAdapter(tvShowList);
+                    mTvShowRecyclerView.setAdapter(mHomeAdapter);
                 } else if (tvShowListEntity.getPage() == FIRST_PAGE) {
-                    mTvShowAdapter.setNewList(tvShowList);
+                    mHomeAdapter.setNewList(tvShowList);
                 } else {
-                    mTvShowAdapter.addTvShows(tvShowList);
+                    mHomeAdapter.addTvShows(tvShowList);
                     loadingType = LoadingType.BOTTOM;
                 }
             }

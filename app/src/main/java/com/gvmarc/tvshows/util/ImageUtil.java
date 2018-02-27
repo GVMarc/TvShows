@@ -6,28 +6,23 @@ import java.util.List;
 public class ImageUtil {
 
     public enum Size {
-        COVER,
-        ORIGINAL
+        POSTER_MID,
+        BACKDROP_BIG
     }
 
     public static String getImageBaseUrl(Size size) {
         switch (size) {
-            case COVER:
-                return AppConstants.IMAGES_BASE_URL + AppConstants.IMAGES_COVER_SIZE;
-            case ORIGINAL:
+            case POSTER_MID:
+                return AppConstants.IMAGES_BASE_URL + AppConstants.IMAGES_POSTER_SIZE;
+            case BACKDROP_BIG:
             default:
-                return AppConstants.IMAGES_BASE_URL + AppConstants.IMAGES_ORIGINAL_SIZE;
+                return AppConstants.IMAGES_BASE_URL + AppConstants.IMAGES_BACKDROP_SIZE;
         }
     }
 
-    public static String getCoverSize(List<String> sizeList) {
-        int midResolution = 4;
-        return sizeList.get(midResolution);
-    }
-
-    public static String getOriginalSize(List<String> sizeList) {
-        int highResolution = 5;
-        return sizeList.get(highResolution);
+    public static String getNormalSize(List<String> sizeList) {
+        int resolution = sizeList.size() - 2;
+        return sizeList.get(resolution);
     }
 
 }

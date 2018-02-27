@@ -10,7 +10,7 @@ public class AppConstants {
 
     //Images
     public static String IMAGES_BASE_URL;
-    public static String IMAGES_COVER_SIZE;
-    public static String IMAGES_ORIGINAL_SIZE;
+    public static String IMAGES_POSTER_SIZE;
+    public static String IMAGES_BACKDROP_SIZE;
 
 }

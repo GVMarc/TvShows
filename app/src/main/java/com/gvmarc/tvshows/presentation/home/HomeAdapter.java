@@ -1,4 +1,4 @@
-package com.gvmarc.tvshows.presentation.adapter;
+package com.gvmarc.tvshows.presentation.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -21,11 +21,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TvShowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<TvShowEntity> mTvShowList;
 
-    public TvShowAdapter(List<TvShowEntity> tvShowList) {
+    public HomeAdapter(List<TvShowEntity> tvShowList) {
         mTvShowList = tvShowList;
     }
 
@@ -54,8 +54,7 @@ public class TvShowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         tvShowViewHolder.title.setText(tvShow.getName());
 
         Picasso.with(context).load(
-                ImageUtil.getImageBaseUrl(ImageUtil.Size.COVER) + tvShow.getPosterPath())
-                .placeholder(R.color.accent)
+                ImageUtil.getImageBaseUrl(ImageUtil.Size.POSTER_MID) + tvShow.getPosterPath())
                 .into(tvShowViewHolder.cover);
 
         tvShowViewHolder.voteAverage.setText(String.valueOf(tvShow.getVoteAverage()));

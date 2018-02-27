@@ -6,6 +6,8 @@
     <color name="blue">#4582d7</color>
     <color name="blue_dark">#2b5794</color>
     <color name="green">#57a947</color>
+    <color name="green_soft">#a9c2a4</color>
+    <color name="yellow">#b4a83a</color>
     <color name="grey_dark">#222</color>
     <color name="grey_soft">#CCC</color>
 
@@ -22,4 +24,5 @@
 
     <!--Views-->
     <color name="tv_show_footer_background">@color/white</color>
+    <color name="item_background">@color/green_soft</color>
 </resources>
