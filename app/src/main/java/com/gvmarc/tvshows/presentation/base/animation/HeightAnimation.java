@@ -11,27 +11,17 @@ public class HeightAnimation {
     private static final int DURATION = 500;
 
     private View mView;
-    private int mAnimationHeight;
+    private int mHeight;
 
     private ValueAnimator mValueAnimator;
 
-    public HeightAnimation(View view, double viewHeight, double viewWidth, double parentWidth) {
+    public HeightAnimation(View view, int viewHeight) {
         mView = view;
-        mAnimationHeight = getAnimationHeight(viewHeight, viewWidth, parentWidth);
-    }
-
-    private int getAnimationHeight(double viewHeight, double viewWidth, double parentWidth) {
-        try {
-            double proportion = parentWidth / viewWidth;
-            long scaledHeight = Math.round(viewHeight * proportion);
-            return (int) scaledHeight;
-        } catch (ArithmeticException e) {
-            return 0;
-        }
+        mHeight = viewHeight;
     }
 
     public void startAnimation() {
-        mValueAnimator = ValueAnimator.ofInt(0, mAnimationHeight);
+        mValueAnimator = ValueAnimator.ofInt(0, mHeight);
         mValueAnimator.setDuration(DURATION);
         mValueAnimator.setInterpolator(new DecelerateInterpolator());
         mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -43,7 +33,7 @@ public class HeightAnimation {
                 params.height = animValue;
                 mView.setLayoutParams(params);
 
-                int alpha = animValue * 255 / mAnimationHeight;
+                int alpha = animValue * 255 / mHeight;
 
                 mView.setAlpha(alpha);
             }

@@ -2,7 +2,7 @@ package com.gvmarc.tvshows.data.api;
 
 
 import com.gvmarc.tvshows.data.entity.config.ConfigurationEntity;
-import com.gvmarc.tvshows.data.entity.details.TvShowDetailsEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 import com.gvmarc.tvshows.data.entity.list.TvShowListEntity;
 import com.gvmarc.tvshows.util.AppConstants;
 
@@ -40,7 +40,7 @@ public class TheMovieDbApiClient {
         apiService.getPopularTvShows(page).enqueue(callback);
     }
 
-    public void getTvShowDetails(int tvShowId, Callback<TvShowDetailsEntity> callback) {
+    public void getTvShowDetails(int tvShowId, Callback<TvShowEntity> callback) {
         apiService.getTvShowDetails(tvShowId).enqueue(callback);
     }
 }

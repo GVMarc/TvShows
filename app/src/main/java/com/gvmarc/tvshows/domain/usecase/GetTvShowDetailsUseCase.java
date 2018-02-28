@@ -2,7 +2,7 @@ package com.gvmarc.tvshows.domain.usecase;
 
 
 import com.gvmarc.tvshows.data.api.TheMovieDbApiClient;
-import com.gvmarc.tvshows.data.entity.details.TvShowDetailsEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,14 +19,14 @@ public class GetTvShowDetailsUseCase {
     }
 
     public void onDetailsRequested(int tvShowId) {
-        apiClient.getTvShowDetails(tvShowId, new Callback<TvShowDetailsEntity>() {
+        apiClient.getTvShowDetails(tvShowId, new Callback<TvShowEntity>() {
             @Override
-            public void onResponse(Call<TvShowDetailsEntity> call, Response<TvShowDetailsEntity> response) {
+            public void onResponse(Call<TvShowEntity> call, Response<TvShowEntity> response) {
                 callback.onResponse(call, response);
             }
 
             @Override
-            public void onFailure(Call<TvShowDetailsEntity> call, Throwable t) {
+            public void onFailure(Call<TvShowEntity> call, Throwable t) {
                 callback.onFailure(call, t);
             }
         });

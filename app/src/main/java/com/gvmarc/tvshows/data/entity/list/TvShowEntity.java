@@ -47,6 +47,12 @@ public class TvShowEntity implements Serializable {
     @SerializedName("original_name")
     private String originalName;
 
+    @SerializedName("number_of_seasons")
+    private int numberOfSeasons;
+
+    @SerializedName("number_of_episodes")
+    private int numberOfEpisodes;
+
     public String getPosterPath() {
         return posterPath;
     }
@@ -151,4 +157,19 @@ public class TvShowEntity implements Serializable {
         this.originalName = originalName;
     }
 
+    public int getNumberOfSeasons() {
+        return numberOfSeasons;
+    }
+
+    public void setNumberOfSeasons(int numberOfSeasons) {
+        this.numberOfSeasons = numberOfSeasons;
+    }
+
+    public int getNumberOfEpisodes() {
+        return numberOfEpisodes;
+    }
+
+    public void setNumberOfEpisodes(int numberOfEpisodes) {
+        this.numberOfEpisodes = numberOfEpisodes;
+    }
 }

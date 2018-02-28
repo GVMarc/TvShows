@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gvmarc.tvshows.R;
-import com.gvmarc.tvshows.data.entity.details.TvShowDetailsEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 import com.gvmarc.tvshows.presentation.base.animation.HeightAnimation;
 import com.gvmarc.tvshows.util.ImageUtil;
 import com.squareup.picasso.Picasso;
@@ -59,14 +59,21 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     private Target mImageTarget = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            int height = bitmap.getHeight();
+            int width = bitmap.getWidth();
+            int parentWidth = mToolbar.getWidth();
+            int proportionalHeight = ImageUtil.getProportionalHeight(
+                    width, height, parentWidth);
+
+            if (parentWidth > width) {
+                bitmap = Bitmap.createScaledBitmap(
+                        bitmap, parentWidth, proportionalHeight, false);
+            }
+
             mImage.setImageBitmap(bitmap);
 
-            double height = bitmap.getHeight();
-            double width = bitmap.getWidth();
-            double parentWidth = mToolbar.getWidth();
-
             HeightAnimation heightAnimation = new HeightAnimation(
-                    mImage, height, width, parentWidth);
+                    mImage, proportionalHeight);
             heightAnimation.startAnimation();
         }
 
@@ -130,21 +137,21 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     }
 
     @Override
-    public void showDetails(TvShowDetailsEntity tvShowDetails) {
+    public void showDetails(TvShowEntity tvShow) {
         setLoading(false);
-        String seasons = String.valueOf(tvShowDetails.getNumberOfSeasons());
-        String episodes = String.valueOf(tvShowDetails.getNumberOfEpisodes());
-        String voteAverage = String.valueOf(tvShowDetails.getVoteAverage());
+        String seasons = String.valueOf(tvShow.getNumberOfSeasons());
+        String episodes = String.valueOf(tvShow.getNumberOfEpisodes());
+        String voteAverage = String.valueOf(tvShow.getVoteAverage());
 
-        mOverview.setText(tvShowDetails.getOverview());
+        mOverview.setText(tvShow.getOverview());
         mSeasons.setText(seasons);
         mEpisodes.setText(episodes);
         mVoteAverage.setText(voteAverage);
 
         animateContent();
 
-        String imageUrl = ImageUtil.getImageBaseUrl(ImageUtil.Size.BACKDROP_BIG)
-                + tvShowDetails.getBackdropPath();
+        String imageUrl = ImageUtil.getImageUrl(
+                tvShow, ImageUtil.Type.BACKDROP);
 
         Picasso.with(this).load(imageUrl).into(mImageTarget);
     }

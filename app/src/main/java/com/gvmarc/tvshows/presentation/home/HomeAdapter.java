@@ -54,7 +54,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         tvShowViewHolder.title.setText(tvShow.getName());
 
         Picasso.with(context).load(
-                ImageUtil.getImageBaseUrl(ImageUtil.Size.POSTER_MID) + tvShow.getPosterPath())
+                ImageUtil.getImageUrl(tvShow, ImageUtil.Type.POSTER))
                 .into(tvShowViewHolder.cover);
 
         tvShowViewHolder.voteAverage.setText(String.valueOf(tvShow.getVoteAverage()));

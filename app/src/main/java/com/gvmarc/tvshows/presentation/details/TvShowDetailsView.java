@@ -1,9 +1,9 @@
 package com.gvmarc.tvshows.presentation.details;
 
 
-import com.gvmarc.tvshows.data.entity.details.TvShowDetailsEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 
 public interface TvShowDetailsView {
     void showNetworkError();
-    void showDetails(TvShowDetailsEntity tvShowDetails);
+    void showDetails(TvShowEntity tvShowDetails);
 }

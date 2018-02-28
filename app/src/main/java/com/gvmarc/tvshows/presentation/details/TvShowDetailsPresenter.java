@@ -1,14 +1,14 @@
 package com.gvmarc.tvshows.presentation.details;
 
 
-import com.gvmarc.tvshows.data.entity.details.TvShowDetailsEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 import com.gvmarc.tvshows.domain.usecase.GetTvShowDetailsUseCase;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TvShowDetailsPresenter implements Callback<TvShowDetailsEntity> {
+public class TvShowDetailsPresenter implements Callback<TvShowEntity> {
 
     private TvShowDetailsView mTvShowDetailsView;
     private GetTvShowDetailsUseCase mGetTvShowDetailsUseCase;
@@ -23,12 +23,12 @@ public class TvShowDetailsPresenter implements Callback<TvShowDetailsEntity> {
     }
 
     @Override
-    public void onResponse(Call<TvShowDetailsEntity> call, Response<TvShowDetailsEntity> response) {
+    public void onResponse(Call<TvShowEntity> call, Response<TvShowEntity> response) {
         mTvShowDetailsView.showDetails(response.body());
     }
 
     @Override
-    public void onFailure(Call<TvShowDetailsEntity> call, Throwable t) {
+    public void onFailure(Call<TvShowEntity> call, Throwable t) {
         mTvShowDetailsView.showNetworkError();
     }
 }

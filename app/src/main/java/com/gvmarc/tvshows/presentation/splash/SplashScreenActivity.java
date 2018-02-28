@@ -57,10 +57,10 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         ImagesConfigEntity imagesConfig = configuration.getImages();
 
         AppConstants.IMAGES_BASE_URL = imagesConfig.getSecureBaseUrl();
-        AppConstants.IMAGES_POSTER_SIZE =
-                ImageUtil.getNormalSize(imagesConfig.getPosterSizes());
-        AppConstants.IMAGES_BACKDROP_SIZE =
-                ImageUtil.getNormalSize(imagesConfig.getBackdropSizes());
+        AppConstants.IMAGES_POSTER_SIZE = ImageUtil.getAvailableResolution(
+                imagesConfig.getPosterSizes(), ImageUtil.Resolution.MID);
+        AppConstants.IMAGES_BACKDROP_SIZE = ImageUtil.getAvailableResolution(
+                imagesConfig.getBackdropSizes(), ImageUtil.Resolution.HIGH);
 
         mConfigIsReady = true;
         checkIsReadyToNavigate();
