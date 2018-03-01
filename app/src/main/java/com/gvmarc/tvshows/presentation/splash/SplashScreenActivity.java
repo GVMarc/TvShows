@@ -8,8 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.gvmarc.tvshows.R;
-import com.gvmarc.tvshows.data.entity.ConfigurationEntity;
-import com.gvmarc.tvshows.data.entity.ImagesConfigEntity;
+import com.gvmarc.tvshows.data.entity.config.ConfigurationEntity;
+import com.gvmarc.tvshows.data.entity.config.ImagesConfigEntity;
 import com.gvmarc.tvshows.presentation.base.Navigator;
 import com.gvmarc.tvshows.util.AppConstants;
 import com.gvmarc.tvshows.util.ImageUtil;
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 public class SplashScreenActivity extends AppCompatActivity implements SplashScreenView {
 
     @LayoutRes
-    private int layout = R.layout.activity_splash_screen;
+    private final int layout = R.layout.activity_splash_screen;
 
     private static final int MIN_SPLASH_TIME = 2 * 1000;
 
@@ -57,17 +57,17 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         ImagesConfigEntity imagesConfig = configuration.getImages();
 
         AppConstants.IMAGES_BASE_URL = imagesConfig.getSecureBaseUrl();
-        AppConstants.IMAGES_COVER_SIZE =
-                ImageUtil.getCoverSize(imagesConfig.getPosterSizes());
-        AppConstants.IMAGES_ORIGINAL_SIZE =
-                ImageUtil.getOriginalSize(imagesConfig.getPosterSizes());
+        AppConstants.IMAGES_POSTER_SIZE = ImageUtil.getAvailableResolution(
+                imagesConfig.getPosterSizes(), ImageUtil.Resolution.MID);
+        AppConstants.IMAGES_BACKDROP_SIZE = ImageUtil.getAvailableResolution(
+                imagesConfig.getBackdropSizes(), ImageUtil.Resolution.HIGH);
 
         mConfigIsReady = true;
         checkIsReadyToNavigate();
     }
 
     @Override
-    public void onNetworkError() {
+    public void showNetworkError() {
         mConfigIsReady = true;
         checkIsReadyToNavigate();
     }

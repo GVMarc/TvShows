@@ -1,9 +1,8 @@
 package com.gvmarc.tvshows.presentation.home;
 
-import com.gvmarc.tvshows.data.entity.TvShowListEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowListEntity;
 
 public interface HomeView {
-
-    void addTvShowsToGrid(TvShowListEntity tvShowListEntity);
-    void onNetworkError();
+    void addTvShows(TvShowListEntity tvShowListEntity);
+    void showNetworkError();
 }

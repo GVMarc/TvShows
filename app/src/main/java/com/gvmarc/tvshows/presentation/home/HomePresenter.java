@@ -1,6 +1,6 @@
 package com.gvmarc.tvshows.presentation.home;
 
-import com.gvmarc.tvshows.data.entity.TvShowListEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowListEntity;
 import com.gvmarc.tvshows.domain.usecase.GetTvShowsUseCase;
 
 import retrofit2.Call;
@@ -12,8 +12,8 @@ public class HomePresenter implements Callback<TvShowListEntity> {
     private HomeView mHomeView;
     private GetTvShowsUseCase mGetTvShowsUseCase;
 
-    public HomePresenter(HomeView homeView) {
-        mHomeView = homeView;
+    public HomePresenter(HomeView view) {
+        mHomeView = view;
         mGetTvShowsUseCase = new GetTvShowsUseCase(this);
     }
 
@@ -23,11 +23,11 @@ public class HomePresenter implements Callback<TvShowListEntity> {
 
     @Override
     public void onResponse(Call<TvShowListEntity> call, Response<TvShowListEntity> response) {
-        mHomeView.addTvShowsToGrid(response.body());
+        mHomeView.addTvShows(response.body());
     }
 
     @Override
     public void onFailure(Call call, Throwable t) {
-        mHomeView.onNetworkError();
+        mHomeView.showNetworkError();
     }
 }

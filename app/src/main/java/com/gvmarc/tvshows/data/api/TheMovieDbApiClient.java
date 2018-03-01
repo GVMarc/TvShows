@@ -1,7 +1,9 @@
 package com.gvmarc.tvshows.data.api;
 
 
-import com.gvmarc.tvshows.data.entity.ConfigurationEntity;
+import com.gvmarc.tvshows.data.entity.config.ConfigurationEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowListEntity;
 import com.gvmarc.tvshows.util.AppConstants;
 
 import okhttp3.OkHttpClient;
@@ -30,11 +32,15 @@ public class TheMovieDbApiClient {
         apiService = retrofit.create(TheMovieDbApiService.class);
     }
 
-    public void getPopularTvShows(int page, Callback callback) {
+    public void getConfiguration(Callback<ConfigurationEntity> callback) {
+        apiService.getConfiguration().enqueue(callback);
+    }
+
+    public void getPopularTvShows(int page, Callback<TvShowListEntity> callback) {
         apiService.getPopularTvShows(page).enqueue(callback);
     }
 
-    public void getConfiguration(Callback<ConfigurationEntity> callback) {
-        apiService.getConfiguration().enqueue(callback);
+    public void getTvShowDetails(int tvShowId, Callback<TvShowEntity> callback) {
+        apiService.getTvShowDetails(tvShowId).enqueue(callback);
     }
 }

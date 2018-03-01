@@ -1,11 +1,12 @@
-package com.gvmarc.tvshows.data.entity;
+package com.gvmarc.tvshows.data.entity.config;
 
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ConfigurationEntity {
+public class ConfigurationEntity implements Serializable{
 
     @SerializedName("images")
     private ImagesConfigEntity images;

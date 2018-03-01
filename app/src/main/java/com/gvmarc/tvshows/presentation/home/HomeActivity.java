@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 public class HomeActivity extends AppCompatActivity {
 
     @LayoutRes
-    int layout = R.layout.activity_home;
+    private final int layout = R.layout.activity_home;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;

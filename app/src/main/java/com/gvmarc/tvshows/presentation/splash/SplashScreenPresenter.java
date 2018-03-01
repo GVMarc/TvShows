@@ -1,7 +1,7 @@
 package com.gvmarc.tvshows.presentation.splash;
 
 
-import com.gvmarc.tvshows.data.entity.ConfigurationEntity;
+import com.gvmarc.tvshows.data.entity.config.ConfigurationEntity;
 import com.gvmarc.tvshows.domain.usecase.GetApiConfigUseCase;
 
 import retrofit2.Call;
@@ -14,8 +14,8 @@ public class SplashScreenPresenter implements Callback<ConfigurationEntity> {
     private SplashScreenView mSplashScreenView;
     private GetApiConfigUseCase mGetApiConfigUseCase;
 
-    public SplashScreenPresenter(SplashScreenView splashScreenView) {
-        mSplashScreenView = splashScreenView;
+    public SplashScreenPresenter(SplashScreenView view) {
+        mSplashScreenView = view;
         mGetApiConfigUseCase = new GetApiConfigUseCase(this);
     }
 
@@ -30,6 +30,6 @@ public class SplashScreenPresenter implements Callback<ConfigurationEntity> {
 
     @Override
     public void onFailure(Call<ConfigurationEntity> call, Throwable t) {
-        mSplashScreenView.onNetworkError();
+        mSplashScreenView.showNetworkError();
     }
 }

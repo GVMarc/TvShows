@@ -15,12 +15,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.gvmarc.tvshows.R;
-import com.gvmarc.tvshows.data.entity.TvShowEntity;
-import com.gvmarc.tvshows.data.entity.TvShowListEntity;
-import com.gvmarc.tvshows.presentation.adapter.TvShowAdapter;
+import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowListEntity;
 
 import java.util.List;
 
@@ -30,7 +28,7 @@ import butterknife.ButterKnife;
 public class HomeFragment extends Fragment implements HomeView {
 
     @LayoutRes
-    int layout = R.layout.fragment_home;
+    private final int layout = R.layout.fragment_home;
 
     private final static int PHONE_COLUMNS = 2;
     private final static int TABLET_COLUMNS = 3;
@@ -58,7 +56,7 @@ public class HomeFragment extends Fragment implements HomeView {
 
     private HomePresenter mPresenter;
     private StaggeredGridLayoutManager mLayoutManager;
-    private TvShowAdapter mTvShowAdapter;
+    private HomeAdapter mHomeAdapter;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -150,19 +148,19 @@ public class HomeFragment extends Fragment implements HomeView {
     }
 
     @Override
-    public void addTvShowsToGrid(TvShowListEntity tvShowListEntity) {
+    public void addTvShows(TvShowListEntity tvShowListEntity) {
 
         LoadingType loadingType = LoadingType.REFRESH;
         if (tvShowListEntity != null) {
             List<TvShowEntity> tvShowList = tvShowListEntity.getResults();
             if (tvShowList != null && !tvShowList.isEmpty()) {
-                if (mTvShowAdapter == null) {
-                    mTvShowAdapter = new TvShowAdapter(tvShowList);
-                    mTvShowRecyclerView.setAdapter(mTvShowAdapter);
+                if (mHomeAdapter == null) {
+                    mHomeAdapter = new HomeAdapter(tvShowList);
+                    mTvShowRecyclerView.setAdapter(mHomeAdapter);
                 } else if (tvShowListEntity.getPage() == FIRST_PAGE) {
-                    mTvShowAdapter.setNewList(tvShowList);
+                    mHomeAdapter.setNewList(tvShowList);
                 } else {
-                    mTvShowAdapter.addTvShows(tvShowList);
+                    mHomeAdapter.addTvShows(tvShowList);
                     loadingType = LoadingType.BOTTOM;
                 }
             }
@@ -171,7 +169,7 @@ public class HomeFragment extends Fragment implements HomeView {
     }
 
     @Override
-    public void onNetworkError() {
+    public void showNetworkError() {
         Snackbar.make(getView(), R.string.connection_error, Snackbar.LENGTH_LONG).show();
         setLoading(false, LoadingType.REFRESH);
         setLoading(false, LoadingType.BOTTOM);
