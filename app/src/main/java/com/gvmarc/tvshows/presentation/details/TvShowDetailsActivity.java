@@ -9,9 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Animation;
@@ -63,7 +62,7 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     @BindView(R.id.loading)
     View mLoading;
 
-    private StaggeredGridLayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
 
     private int mTvShowId;
     private String mTvShowName;
@@ -157,7 +156,8 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     private void initRecyclerView() {
         mSimilarTvShowsRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new StaggeredGridLayoutManager(1, OrientationHelper.HORIZONTAL);
+        mLayoutManager = new LinearLayoutManager(
+                this, LinearLayoutManager.HORIZONTAL, false);
         mSimilarTvShowsRecyclerView.setLayoutManager(mLayoutManager);
     }
 

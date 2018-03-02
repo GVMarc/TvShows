@@ -121,7 +121,9 @@ public class HomeFragment extends Fragment implements HomeView {
         mTvShowRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                onTvShowGridScrolled();
+                if (dy > 0) {
+                    onTvShowGridScrolled();
+                }
             }
         });
     }
@@ -185,7 +187,6 @@ public class HomeFragment extends Fragment implements HomeView {
             case REFRESH:
                 showRefreshLayoutLoading(loading);
                 break;
-
             case BOTTOM:
                 if (loading) showBottomLoading();
                 break;

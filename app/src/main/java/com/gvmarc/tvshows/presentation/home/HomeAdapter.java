@@ -19,7 +19,6 @@ import com.gvmarc.tvshows.util.ImageUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,9 +68,7 @@ public class HomeAdapter extends RecyclerView.Adapter<ViewHolder> {
         String imageUrl = ImageUtil.getImageUrl(tvShow, ImageUtil.Type.POSTER);
 
         if (imageUrl != null) {
-            Picasso.with(context).load(imageUrl)
-                    .placeholder(getRandomColor())
-                    .into(tvShowViewHolder.cover);
+            Picasso.with(context).load(imageUrl).into(tvShowViewHolder.cover);
         }
 
         tvShowViewHolder.voteAverage.setText(String.valueOf(tvShow.getVoteAverage()));
@@ -98,19 +95,6 @@ public class HomeAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void addTvShows(List<TvShowEntity> tvShowList) {
         mTvShowList.addAll(tvShowList);
         notifyDataSetChanged();
-    }
-
-    private int getRandomColor() {
-        Random random = new Random();
-        int colorIndex = random.nextInt(3);
-        switch (colorIndex) {
-            case 1:
-                return R.color.green_soft;
-            case 2:
-                return R.color.blue_soft;
-            default:
-                return R.color.grey_soft;
-        }
     }
 
     static class TvShowViewHolder extends ViewHolder {

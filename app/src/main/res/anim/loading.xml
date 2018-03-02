@@ -12,6 +12,6 @@
         android:pivotX="50%"
         android:repeatCount="infinite"
         android:pivotY="50%"
-        android:toDegrees="1080" />
+        android:toDegrees="1500" />
 
 </set>

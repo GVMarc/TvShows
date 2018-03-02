@@ -13,7 +13,7 @@
         android:interpolator="@android:anim/decelerate_interpolator"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:toDegrees="600" />
+        android:toDegrees="1000" />
 
     <alpha
         android:duration="500"
