@@ -46,6 +46,8 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     Toolbar mToolbar;
     @BindView(R.id.content_layout)
     View mContentLayout;
+    @BindView(R.id.similar_section)
+    View mSimilarTvShowsSection;
     @BindView(R.id.tv_show_grid)
     RecyclerView mSimilarTvShowsRecyclerView;
     @BindView(R.id.overview)
@@ -138,6 +140,7 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     }
 
     private void initViews() {
+        setLoading(true);
         initToolbar();
         initRecyclerView();
     }
@@ -171,8 +174,14 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     }
 
     private void setLoading(boolean loading) {
-        int visibility = loading ? View.VISIBLE : View.GONE;
-        mLoading.setVisibility(visibility);
+        if (loading) {
+            mLoading.setVisibility(View.VISIBLE);
+            Animation animation = AnimationUtils.loadAnimation(this, R.anim.loading);
+            mLoading.startAnimation(animation);
+        } else {
+            mLoading.setVisibility(View.GONE);
+            mLoading.clearAnimation();
+        }
     }
 
     @Override
@@ -201,6 +210,7 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
         if (tvShowListEntity != null) {
             List<TvShowEntity> tvShowList = tvShowListEntity.getResults();
             if (tvShowList != null && !tvShowList.isEmpty()) {
+                mSimilarTvShowsSection.setVisibility(View.VISIBLE);
                 HomeAdapter homeAdapter = new HomeAdapter(tvShowList, HomeAdapter.Type.DETAILS);
                 mSimilarTvShowsRecyclerView.setAdapter(homeAdapter);
             }

@@ -11,11 +11,10 @@ import com.gvmarc.tvshows.R;
 
 public class RateBarAnimation {
 
-    private static final int DURATION = 2000;
+    private static final int DURATION = 1000;
 
-    private static final int RATE_HIGH = 74;
-    private static final int RATE_MID = 59;
-    private static final int RATE_LOW = 49;
+    private static final int RATE_HIGH = 69;
+    private static final int RATE_MID = 49;
 
     private ProgressBar mProgressBar;
     private int mValue;
@@ -55,14 +54,11 @@ public class RateBarAnimation {
 
     private int getRateColor() {
         if (mValue > RATE_HIGH) {
-            return R.color.blue;
-        } else if (mValue > RATE_MID) {
             return R.color.green;
-        } else if (mValue > RATE_LOW) {
+        } else if (mValue > RATE_MID) {
             return R.color.yellow;
         } else {
             return R.color.red;
         }
     }
-
 }

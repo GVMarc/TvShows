@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/background"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             android:weightSum="2">
 
             <ImageView
@@ -149,11 +149,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/similar_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_separation"
                 android:background="@color/content_background"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -178,10 +180,11 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <ProgressBar
+    <ImageView
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:src="@drawable/loading" />
 
 </RelativeLayout>
