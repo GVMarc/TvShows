@@ -7,6 +7,7 @@ public class AppConstants {
 
     //Base
     public static String BASE_URL = BuildConfig.BASE_URL;
+    public static String API_KEY = BuildConfig.API_KEY;
 
     //Images
     public static String IMAGES_BASE_URL;

@@ -10,14 +10,12 @@ import retrofit2.Response;
 public class GetTvShowsUseCase {
 
     private TheMovieDbApiClient apiClient;
-    private Callback<TvShowListEntity> callback;
 
-    public GetTvShowsUseCase(Callback<TvShowListEntity> callback) {
-        this.callback = callback;
+    public GetTvShowsUseCase() {
         apiClient = new TheMovieDbApiClient();
     }
 
-    public void onTvShowsRequested(int page) {
+    public void onPopularTvShowsRequested(int page, final Callback<TvShowListEntity> callback) {
         apiClient.getPopularTvShows(page, new Callback<TvShowListEntity>() {
             @Override
             public void onResponse(Call<TvShowListEntity> call, Response<TvShowListEntity> response) {
@@ -31,4 +29,17 @@ public class GetTvShowsUseCase {
         });
     }
 
+    public void onSimilarTvShowsRequested(int tvShowId, final Callback<TvShowListEntity> callback) {
+        apiClient.getSimilarTvShows(tvShowId, new Callback<TvShowListEntity>() {
+            @Override
+            public void onResponse(Call<TvShowListEntity> call, Response<TvShowListEntity> response) {
+                callback.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<TvShowListEntity> call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+        });
+    }
 }

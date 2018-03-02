@@ -1,6 +1,5 @@
 package com.gvmarc.tvshows.data.api;
 
-import com.gvmarc.tvshows.BuildConfig;
 import com.gvmarc.tvshows.data.entity.config.ConfigurationEntity;
 import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 import com.gvmarc.tvshows.data.entity.list.TvShowListEntity;
@@ -12,12 +11,15 @@ import retrofit2.http.Query;
 
 public interface TheMovieDbApiService {
 
-    @GET("configuration?api_key=" + BuildConfig.API_KEY)
+    @GET("configuration")
     Call<ConfigurationEntity> getConfiguration();
 
-    @GET("tv/popular?api_key=" + BuildConfig.API_KEY)
+    @GET("tv/popular")
     Call<TvShowListEntity> getPopularTvShows(@Query("page") int page);
 
-    @GET("tv/{tvShowId}?api_key=" + BuildConfig.API_KEY)
+    @GET("tv/{tvShowId}")
     Call<TvShowEntity> getTvShowDetails(@Path("tvShowId") int tvShowId);
+
+    @GET("tv/{tvShowId}/similar")
+    Call<TvShowListEntity> getSimilarTvShows(@Path("tvShowId") int tvShowId);
 }

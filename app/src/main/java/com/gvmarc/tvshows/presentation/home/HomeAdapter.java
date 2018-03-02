@@ -26,17 +26,24 @@ import butterknife.ButterKnife;
 
 public class HomeAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-    @LayoutRes
-    private final static int layout = R.layout.view_tv_show;
+    public enum Type {
+        MAIN,
+        DETAILS
+    }
 
     private List<TvShowEntity> mTvShowList;
+    private Type mType;
 
-    public HomeAdapter(List<TvShowEntity> tvShowList) {
+    public HomeAdapter(List<TvShowEntity> tvShowList, Type type) {
         mTvShowList = tvShowList;
+        mType = type;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        @LayoutRes int layout = mType == Type.MAIN ?
+                R.layout.view_tv_show_main : R.layout.view_tv_show_details;
 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(layout, parent, false);
@@ -102,7 +109,7 @@ public class HomeAdapter extends RecyclerView.Adapter<ViewHolder> {
             case 2:
                 return R.color.blue_soft;
             default:
-                return R.color.white;
+                return R.color.grey_soft;
         }
     }
 

@@ -19,6 +19,7 @@ public class TheMovieDbApiClient {
     public TheMovieDbApiClient() {
 
         OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new TheMovieDbInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor()
                         .setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
@@ -42,5 +43,9 @@ public class TheMovieDbApiClient {
 
     public void getTvShowDetails(int tvShowId, Callback<TvShowEntity> callback) {
         apiService.getTvShowDetails(tvShowId).enqueue(callback);
+    }
+
+    public void getSimilarTvShows(int tvShowId, Callback<TvShowListEntity> callback) {
+        apiService.getSimilarTvShows(tvShowId).enqueue(callback);
     }
 }

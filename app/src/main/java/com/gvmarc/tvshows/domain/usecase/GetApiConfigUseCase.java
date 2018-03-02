@@ -11,14 +11,12 @@ import retrofit2.Response;
 public class GetApiConfigUseCase {
 
     private TheMovieDbApiClient apiClient;
-    private Callback<ConfigurationEntity> callback;
 
-    public GetApiConfigUseCase(Callback<ConfigurationEntity> callback) {
-        this.callback = callback;
+    public GetApiConfigUseCase() {
         apiClient = new TheMovieDbApiClient();
     }
 
-    public void onConfigurationRequested() {
+    public void onConfigurationRequested(final Callback<ConfigurationEntity> callback) {
         apiClient.getConfiguration(new Callback<ConfigurationEntity>() {
             @Override
             public void onResponse(Call<ConfigurationEntity> call, Response<ConfigurationEntity> response) {

@@ -11,14 +11,12 @@ import retrofit2.Response;
 public class GetTvShowDetailsUseCase {
 
     private TheMovieDbApiClient apiClient;
-    private Callback<TvShowEntity> callback;
 
-    public GetTvShowDetailsUseCase(Callback<TvShowEntity> callback) {
-        this.callback = callback;
+    public GetTvShowDetailsUseCase() {
         apiClient = new TheMovieDbApiClient();
     }
 
-    public void onDetailsRequested(int tvShowId) {
+    public void onDetailsRequested(int tvShowId, final Callback<TvShowEntity> callback) {
         apiClient.getTvShowDetails(tvShowId, new Callback<TvShowEntity>() {
             @Override
             public void onResponse(Call<TvShowEntity> call, Response<TvShowEntity> response) {

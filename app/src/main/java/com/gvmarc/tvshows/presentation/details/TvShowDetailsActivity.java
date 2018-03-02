@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,10 +22,14 @@ import android.widget.TextView;
 import com.gvmarc.tvshows.BuildConfig;
 import com.gvmarc.tvshows.R;
 import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
+import com.gvmarc.tvshows.data.entity.list.TvShowListEntity;
 import com.gvmarc.tvshows.presentation.base.animation.HeightAnimation;
+import com.gvmarc.tvshows.presentation.home.HomeAdapter;
 import com.gvmarc.tvshows.util.ImageUtil;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +46,8 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     Toolbar mToolbar;
     @BindView(R.id.content_layout)
     View mContentLayout;
+    @BindView(R.id.tv_show_grid)
+    RecyclerView mSimilarTvShowsRecyclerView;
     @BindView(R.id.overview)
     TextView mOverview;
     @BindView(R.id.image)
@@ -51,6 +60,8 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     TextView mVoteAverage;
     @BindView(R.id.loading)
     View mLoading;
+
+    private StaggeredGridLayoutManager mLayoutManager;
 
     private int mTvShowId;
     private String mTvShowName;
@@ -110,11 +121,12 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
         getArguments();
         initViews();
         mTvShowDetailsPresenter = new TvShowDetailsPresenter(this);
-        requestTvShowDetails();
+        requestContent();
     }
 
-    private void requestTvShowDetails() {
+    private void requestContent() {
         mTvShowDetailsPresenter.requestTvShowDetails(mTvShowId);
+        mTvShowDetailsPresenter.requestSimilarTvShows(mTvShowId);
     }
 
     private void getArguments() {
@@ -127,6 +139,7 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
 
     private void initViews() {
         initToolbar();
+        initRecyclerView();
     }
 
     private void initToolbar() {
@@ -138,10 +151,28 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
         }
     }
 
+    private void initRecyclerView() {
+        mSimilarTvShowsRecyclerView.setHasFixedSize(true);
+
+        mLayoutManager = new StaggeredGridLayoutManager(1, OrientationHelper.HORIZONTAL);
+        mSimilarTvShowsRecyclerView.setLayoutManager(mLayoutManager);
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    private void animateContent() {
+        mContentLayout.setVisibility(View.VISIBLE);
+        Animation contentAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        mContentLayout.startAnimation(contentAnimation);
+    }
+
+    private void setLoading(boolean loading) {
+        int visibility = loading ? View.VISIBLE : View.GONE;
+        mLoading.setVisibility(visibility);
     }
 
     @Override
@@ -165,19 +196,19 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
         }
     }
 
-    private void animateContent() {
-        mContentLayout.setVisibility(View.VISIBLE);
-        Animation contentAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        mContentLayout.startAnimation(contentAnimation);
+    @Override
+    public void showSimilarTvShows(TvShowListEntity tvShowListEntity) {
+        if (tvShowListEntity != null) {
+            List<TvShowEntity> tvShowList = tvShowListEntity.getResults();
+            if (tvShowList != null && !tvShowList.isEmpty()) {
+                HomeAdapter homeAdapter = new HomeAdapter(tvShowList, HomeAdapter.Type.DETAILS);
+                mSimilarTvShowsRecyclerView.setAdapter(homeAdapter);
+            }
+        }
     }
 
     @Override
     public void showNetworkError() {
         setLoading(false);
-    }
-
-    private void setLoading(boolean loading) {
-        int visibility = loading ? View.VISIBLE : View.GONE;
-        mLoading.setVisibility(visibility);
     }
 }

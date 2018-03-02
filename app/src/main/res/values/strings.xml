@@ -5,11 +5,11 @@
 
     <!--Activities-->
     <string name="home_activity">Tv Shows</string>
-    <string name="tv_show_cover">Cover of tv show</string>
 
     <!--Details-->
-    <string name="tv_show_image">Image of the tv show</string>
-    <string name="seasons">Seasons:</string>
-    <string name="episodes">Episodes:</string>
+    <string name="details_seasons">Seasons:</string>
+    <string name="details_episodes">Episodes:</string>
+    <string name="details_title_similar">Similar tv shows</string>
+    <string name="details_title_overview">Overview</string>
 
 </resources>

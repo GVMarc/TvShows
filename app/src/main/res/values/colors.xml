@@ -3,6 +3,7 @@
 
     <!--App Color Palette-->
     <color name="white">#FFF</color>
+    <color name="white_soft">#FAFAFA</color>
     <color name="grey_dark">#222</color>
     <color name="grey_soft">#CCC</color>
     <color name="blue_soft">#8faacf</color>
@@ -10,7 +11,7 @@
     <color name="blue_dark">#2b5794</color>
     <color name="green_soft">#a9c2a4</color>
     <color name="green">#57a947</color>
-    <color name="yellow">#eddd43</color>
+    <color name="yellow">#f5e628</color>
     <color name="red">#c25350</color>
 
     <!--App theme-->
@@ -19,6 +20,7 @@
     <color name="accent">@color/green</color>
     <color name="text_primary">@color/grey_dark</color>
     <color name="background">@color/grey_soft</color>
+    <color name="content_background">@color/white_soft</color>
 
     <!--Toolbar-->
     <color name="toolbar_text">@color/white</color>

@@ -158,7 +158,7 @@ public class HomeFragment extends Fragment implements HomeView {
             List<TvShowEntity> tvShowList = tvShowListEntity.getResults();
             if (tvShowList != null && !tvShowList.isEmpty()) {
                 if (mHomeAdapter == null) {
-                    mHomeAdapter = new HomeAdapter(tvShowList);
+                    mHomeAdapter = new HomeAdapter(tvShowList, HomeAdapter.Type.MAIN);
                     mTvShowRecyclerView.setAdapter(mHomeAdapter);
                 } else if (tvShowListEntity.getPage() == FIRST_PAGE) {
                     mHomeAdapter.setNewList(tvShowList);
