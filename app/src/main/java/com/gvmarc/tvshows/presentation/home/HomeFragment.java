@@ -15,6 +15,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.gvmarc.tvshows.R;
 import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
@@ -58,9 +60,10 @@ public class HomeFragment extends Fragment implements HomeView {
     private StaggeredGridLayoutManager mLayoutManager;
     private HomeAdapter mHomeAdapter;
 
+    private Animation mBottomLoadingAnimation;
+
     public static HomeFragment newInstance() {
-        HomeFragment homeFragment = new HomeFragment();
-        return homeFragment;
+        return new HomeFragment();
     }
 
     @Nullable
@@ -112,7 +115,7 @@ public class HomeFragment extends Fragment implements HomeView {
             mColumns *= 2;
         }
 
-        mLayoutManager = new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
+        mLayoutManager = new StaggeredGridLayoutManager(mColumns, OrientationHelper.VERTICAL);
         mTvShowRecyclerView.setLayoutManager(mLayoutManager);
 
         mTvShowRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -170,23 +173,33 @@ public class HomeFragment extends Fragment implements HomeView {
 
     @Override
     public void showNetworkError() {
-        Snackbar.make(getView(), R.string.connection_error, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mRefreshLayout, R.string.connection_error, Snackbar.LENGTH_LONG).show();
         setLoading(false, LoadingType.REFRESH);
         setLoading(false, LoadingType.BOTTOM);
     }
 
     private void setLoading(boolean loading, LoadingType loadingType) {
         mIsLoading = loading;
-        if (loadingType == LoadingType.REFRESH) {
-            showRefreshLayoutLoading(loading);
-        } else {
-            showBottomLoading(loading);
+
+        switch (loadingType) {
+            case REFRESH:
+                showRefreshLayoutLoading(loading);
+                break;
+
+            case BOTTOM:
+                if (loading) showBottomLoading();
+                break;
         }
     }
 
-    private void showBottomLoading(boolean show) {
-        int visibility = show ? View.VISIBLE : View.GONE;
-        mBottomLoading.setVisibility(visibility);
+    private void showBottomLoading() {
+        if (mBottomLoadingAnimation == null) {
+            mBottomLoadingAnimation = AnimationUtils.loadAnimation(
+                    getActivity(), R.anim.bottom_loading);
+            mBottomLoading.setVisibility(View.VISIBLE);
+        }
+
+        mBottomLoading.startAnimation(mBottomLoadingAnimation);
     }
 
     private void showRefreshLayoutLoading(boolean show) {

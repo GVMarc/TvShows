@@ -11,9 +11,9 @@ import retrofit2.Response;
 public class GetApiConfigUseCase {
 
     private TheMovieDbApiClient apiClient;
-    private Callback callback;
+    private Callback<ConfigurationEntity> callback;
 
-    public GetApiConfigUseCase(Callback callback) {
+    public GetApiConfigUseCase(Callback<ConfigurationEntity> callback) {
         this.callback = callback;
         apiClient = new TheMovieDbApiClient();
     }

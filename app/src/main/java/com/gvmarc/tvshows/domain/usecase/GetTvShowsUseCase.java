@@ -10,9 +10,9 @@ import retrofit2.Response;
 public class GetTvShowsUseCase {
 
     private TheMovieDbApiClient apiClient;
-    private Callback callback;
+    private Callback<TvShowListEntity> callback;
 
-    public GetTvShowsUseCase(Callback callback) {
+    public GetTvShowsUseCase(Callback<TvShowListEntity> callback) {
         this.callback = callback;
         apiClient = new TheMovieDbApiClient();
     }

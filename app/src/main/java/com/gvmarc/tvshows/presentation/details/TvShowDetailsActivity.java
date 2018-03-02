@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gvmarc.tvshows.BuildConfig;
 import com.gvmarc.tvshows.R;
 import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 import com.gvmarc.tvshows.presentation.base.animation.HeightAnimation;
@@ -62,19 +63,26 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
             int height = bitmap.getHeight();
             int width = bitmap.getWidth();
             int parentWidth = mToolbar.getWidth();
-            int proportionalHeight = ImageUtil.getProportionalHeight(
-                    width, height, parentWidth);
+            try {
+                int proportionalHeight = ImageUtil.getProportionalHeight(
+                        width, height, parentWidth);
 
-            if (parentWidth > width) {
-                bitmap = Bitmap.createScaledBitmap(
-                        bitmap, parentWidth, proportionalHeight, false);
+                if (parentWidth != width) {
+                    bitmap = Bitmap.createScaledBitmap(
+                            bitmap, parentWidth, proportionalHeight, false);
+                }
+
+                mImage.setImageBitmap(bitmap);
+
+                HeightAnimation heightAnimation = new HeightAnimation(mImage, proportionalHeight);
+                heightAnimation.startAnimation();
+
+            } catch (ArithmeticException e) {
+                mImage.setImageBitmap(bitmap);
+                if (BuildConfig.DEBUG) {
+                    e.printStackTrace();
+                }
             }
-
-            mImage.setImageBitmap(bitmap);
-
-            HeightAnimation heightAnimation = new HeightAnimation(
-                    mImage, proportionalHeight);
-            heightAnimation.startAnimation();
         }
 
         @Override
@@ -150,10 +158,11 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
 
         animateContent();
 
-        String imageUrl = ImageUtil.getImageUrl(
-                tvShow, ImageUtil.Type.BACKDROP);
+        String imageUrl = ImageUtil.getImageUrl(tvShow, ImageUtil.Type.BACKDROP);
 
-        Picasso.with(this).load(imageUrl).into(mImageTarget);
+        if (imageUrl != null) {
+            Picasso.with(this).load(imageUrl).into(mImageTarget);
+        }
     }
 
     private void animateContent() {

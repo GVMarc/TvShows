@@ -1,6 +1,7 @@
 package com.gvmarc.tvshows.presentation.home;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -13,15 +14,20 @@ import android.widget.TextView;
 import com.gvmarc.tvshows.R;
 import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 import com.gvmarc.tvshows.presentation.base.Navigator;
+import com.gvmarc.tvshows.presentation.base.animation.RateBarAnimation;
 import com.gvmarc.tvshows.util.ImageUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<ViewHolder> {
+
+    @LayoutRes
+    private final static int layout = R.layout.view_tv_show;
 
     private List<TvShowEntity> mTvShowList;
 
@@ -33,7 +39,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_tv_show, parent, false);
+                .inflate(layout, parent, false);
 
         return new TvShowViewHolder(view);
     }
@@ -53,12 +59,21 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         tvShowViewHolder.title.setText(tvShow.getName());
 
-        Picasso.with(context).load(
-                ImageUtil.getImageUrl(tvShow, ImageUtil.Type.POSTER))
-                .into(tvShowViewHolder.cover);
+        String imageUrl = ImageUtil.getImageUrl(tvShow, ImageUtil.Type.POSTER);
+
+        if (imageUrl != null) {
+            Picasso.with(context).load(imageUrl)
+                    .placeholder(getRandomColor())
+                    .into(tvShowViewHolder.cover);
+        }
 
         tvShowViewHolder.voteAverage.setText(String.valueOf(tvShow.getVoteAverage()));
-        tvShowViewHolder.progressBar.setProgress((int) (tvShow.getVoteAverage() * 10));
+
+        int normalizedRating = (int) (tvShow.getVoteAverage() * 10);
+
+        RateBarAnimation rateBarAnimation = new RateBarAnimation(
+                tvShowViewHolder.progressBar, normalizedRating);
+        rateBarAnimation.startAnimation();
 
         tvShowViewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +93,20 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    static class TvShowViewHolder extends RecyclerView.ViewHolder {
+    private int getRandomColor() {
+        Random random = new Random();
+        int colorIndex = random.nextInt(3);
+        switch (colorIndex) {
+            case 1:
+                return R.color.green_soft;
+            case 2:
+                return R.color.blue_soft;
+            default:
+                return R.color.white;
+        }
+    }
+
+    static class TvShowViewHolder extends ViewHolder {
 
         View view;
 

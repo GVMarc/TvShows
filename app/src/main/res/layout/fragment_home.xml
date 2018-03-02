@@ -20,12 +20,14 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <ProgressBar
+    <ImageView
         android:id="@+id/bottom_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_margin="@dimen/bottom_loading_margin"
+        android:elevation="@dimen/elevation_default"
+        android:src="@drawable/bottom_loading"
         android:visibility="gone" />
 
 </FrameLayout>

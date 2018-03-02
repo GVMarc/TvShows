@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:background="@color/item_background"
-        android:contentDescription="@string/tv_show_cover"
-        android:minHeight="@dimen/item_image_min_height" />
+        android:contentDescription="@string/tv_show_cover" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,6 +29,7 @@
             android:maxLines="2"
             android:textColor="@color/text_primary"
             android:textSize="@dimen/item_footer_title"
+            android:textStyle="bold"
             tools:text="Title with example to see two lines lorem ipsum " />
 
         <LinearLayout
@@ -43,11 +42,12 @@
             <ProgressBar
                 android:id="@+id/vote_average_progressbar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="@dimen/item_vote_progress_width"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/item_footer_margin"
                 android:layout_marginRight="@dimen/item_footer_margin"
+                android:layout_weight="1"
                 android:max="100" />
 
             <TextView

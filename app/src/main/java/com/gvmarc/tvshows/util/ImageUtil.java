@@ -36,10 +36,10 @@ public class ImageUtil {
                 return AppConstants.IMAGES_BASE_URL +
                         AppConstants.IMAGES_POSTER_SIZE + tvShow.getPosterPath();
             case BACKDROP:
-            default:
                 return AppConstants.IMAGES_BASE_URL +
                         AppConstants.IMAGES_BACKDROP_SIZE + tvShow.getBackdropPath();
         }
+        return null;
     }
 
     public static String getAvailableResolution(List<String> sizeList, Resolution resolution) {
