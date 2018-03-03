@@ -73,11 +73,14 @@ public class HomeAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         tvShowViewHolder.voteAverage.setText(String.valueOf(tvShow.getVoteAverage()));
 
-        int normalizedRating = (int) (tvShow.getVoteAverage() * 10);
+        Double voteAverage = tvShow.getVoteAverage();
+        if (voteAverage != null) {
+            int normalizedRating = (int) (tvShow.getVoteAverage() * 10);
 
-        RateBarAnimation rateBarAnimation = new RateBarAnimation(
-                tvShowViewHolder.progressBar, normalizedRating);
-        rateBarAnimation.startAnimation();
+            RateBarAnimation rateBarAnimation = new RateBarAnimation(
+                    tvShowViewHolder.progressBar, normalizedRating);
+            rateBarAnimation.startAnimation();
+        }
 
         tvShowViewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override

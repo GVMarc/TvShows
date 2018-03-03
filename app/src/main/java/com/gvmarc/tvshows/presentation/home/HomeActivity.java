@@ -52,4 +52,8 @@ public class HomeActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, mHomeFragment).commit();
     }
+
+    public HomeFragment getFragment() {
+        return mHomeFragment;
+    }
 }

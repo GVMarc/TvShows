@@ -3,7 +3,6 @@ package com.gvmarc.tvshows.util;
 
 import com.gvmarc.tvshows.data.entity.list.TvShowEntity;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ImageUtil {
@@ -42,8 +41,15 @@ public class ImageUtil {
         return null;
     }
 
+    /**
+     * This method gets the requested resolution from a size list ordered from
+     * lowest to highest resolution.
+     *
+     * @param sizeList   The list of sizes ORDERED from lowest to highest resolution
+     * @param resolution The type of resolution required
+     * @return String - Resolution requested
+     */
     public static String getAvailableResolution(List<String> sizeList, Resolution resolution) {
-        Collections.reverse(sizeList);
         return sizeList.get(resolution.getIndex());
     }
 

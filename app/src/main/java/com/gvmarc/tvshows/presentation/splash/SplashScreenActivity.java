@@ -14,6 +14,9 @@ import com.gvmarc.tvshows.presentation.base.Navigator;
 import com.gvmarc.tvshows.util.AppConstants;
 import com.gvmarc.tvshows.util.ImageUtil;
 
+import java.util.Collections;
+import java.util.List;
+
 import butterknife.ButterKnife;
 
 public class SplashScreenActivity extends AppCompatActivity implements SplashScreenView {
@@ -54,16 +57,24 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
 
     @Override
     public void saveApiConfiguration(ConfigurationEntity configuration) {
-        ImagesConfigEntity imagesConfig = configuration.getImages();
+        if (configuration != null) {
+            ImagesConfigEntity imagesConfig = configuration.getImages();
+            if (imagesConfig != null) {
+                List<String> posterSizeList = imagesConfig.getPosterSizes();
+                List<String> backdropSizeList = imagesConfig.getBackdropSizes();
+                Collections.reverse(posterSizeList);
+                Collections.reverse(backdropSizeList);
 
-        AppConstants.IMAGES_BASE_URL = imagesConfig.getSecureBaseUrl();
-        AppConstants.IMAGES_POSTER_SIZE = ImageUtil.getAvailableResolution(
-                imagesConfig.getPosterSizes(), ImageUtil.Resolution.LOW);
-        AppConstants.IMAGES_BACKDROP_SIZE = ImageUtil.getAvailableResolution(
-                imagesConfig.getBackdropSizes(), ImageUtil.Resolution.HIGH);
+                AppConstants.IMAGES_BASE_URL = imagesConfig.getSecureBaseUrl();
+                AppConstants.IMAGES_POSTER_SIZE = ImageUtil.getAvailableResolution(
+                        posterSizeList, ImageUtil.Resolution.LOW);
+                AppConstants.IMAGES_BACKDROP_SIZE = ImageUtil.getAvailableResolution(
+                        backdropSizeList, ImageUtil.Resolution.HIGH);
 
-        mConfigIsReady = true;
-        checkIsReadyToNavigate();
+                mConfigIsReady = true;
+                checkIsReadyToNavigate();
+            }
+        }
     }
 
     @Override

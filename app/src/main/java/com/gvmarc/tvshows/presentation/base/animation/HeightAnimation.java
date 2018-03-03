@@ -21,23 +21,25 @@ public class HeightAnimation {
     }
 
     public void startAnimation() {
-        mValueAnimator = ValueAnimator.ofInt(0, mHeight);
-        mValueAnimator.setDuration(DURATION);
-        mValueAnimator.setInterpolator(new DecelerateInterpolator());
-        mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int animValue = (int) animation.getAnimatedValue();
+        if (mView != null) {
+            mValueAnimator = ValueAnimator.ofInt(0, mHeight);
+            mValueAnimator.setDuration(DURATION);
+            mValueAnimator.setInterpolator(new DecelerateInterpolator());
+            mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    int animValue = (int) animation.getAnimatedValue();
 
-                ViewGroup.LayoutParams params = mView.getLayoutParams();
-                params.height = animValue;
-                mView.setLayoutParams(params);
+                    ViewGroup.LayoutParams params = mView.getLayoutParams();
+                    params.height = animValue;
+                    mView.setLayoutParams(params);
 
-                int alpha = animValue * 255 / mHeight;
+                    int alpha = animValue * 255 / mHeight;
 
-                mView.setAlpha(alpha);
-            }
-        });
-        mValueAnimator.start();
+                    mView.setAlpha(alpha);
+                }
+            });
+            mValueAnimator.start();
+        }
     }
 }

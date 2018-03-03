@@ -204,7 +204,9 @@ public class HomeFragment extends Fragment implements HomeView {
     }
 
     private void showRefreshLayoutLoading(boolean show) {
-        mRefreshLayout.setRefreshing(show);
+        if (mRefreshLayout != null) {
+            mRefreshLayout.setRefreshing(show);
+        }
     }
 
     private void resetPagination() {

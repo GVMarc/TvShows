@@ -27,29 +27,31 @@ public class RateBarAnimation {
     }
 
     public void startAnimation() {
-        int colorFrom = ContextCompat.getColor(mProgressBar.getContext(), R.color.red);
-        int colorTo = ContextCompat.getColor(mProgressBar.getContext(), getRateColor());
-        mColorAnimator = ValueAnimator.ofObject(
-                new ArgbEvaluator(), colorFrom, colorTo);
-        mColorAnimator.setDuration(DURATION);
-        mColorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int color = (int) valueAnimator.getAnimatedValue();
-                DrawableCompat.setTint(mProgressBar.getProgressDrawable(), color);
-            }
-        });
-        mColorAnimator.start();
+        if (mProgressBar != null) {
+            int colorFrom = ContextCompat.getColor(mProgressBar.getContext(), R.color.red);
+            int colorTo = ContextCompat.getColor(mProgressBar.getContext(), getRateColor());
+            mColorAnimator = ValueAnimator.ofObject(
+                    new ArgbEvaluator(), colorFrom, colorTo);
+            mColorAnimator.setDuration(DURATION);
+            mColorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    int color = (int) valueAnimator.getAnimatedValue();
+                    DrawableCompat.setTint(mProgressBar.getProgressDrawable(), color);
+                }
+            });
+            mColorAnimator.start();
 
-        mProgressAnimator = ValueAnimator.ofInt(0, mValue);
-        mProgressAnimator.setDuration(DURATION);
-        mProgressAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                mProgressBar.setProgress((int) valueAnimator.getAnimatedValue());
-            }
-        });
-        mProgressAnimator.start();
+            mProgressAnimator = ValueAnimator.ofInt(0, mValue);
+            mProgressAnimator.setDuration(DURATION);
+            mProgressAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    mProgressBar.setProgress((int) valueAnimator.getAnimatedValue());
+                }
+            });
+            mProgressAnimator.start();
+        }
     }
 
     private int getRateColor() {

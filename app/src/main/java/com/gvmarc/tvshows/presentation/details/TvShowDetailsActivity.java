@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,7 +65,7 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
 
     private LinearLayoutManager mLayoutManager;
 
-    private int mTvShowId;
+    private Integer mTvShowId;
     private String mTvShowName;
 
     private TvShowDetailsPresenter mTvShowDetailsPresenter;
@@ -107,6 +108,11 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     };
 
     public static Intent buildIntent(Context context, int tvShowId, String tvShowName) {
+
+        if (context == null) {
+            return null;
+        }
+
         Intent intent = new Intent(context, TvShowDetailsActivity.class);
         intent.putExtra(EXTRA_TVSHOW_ID, tvShowId);
         intent.putExtra(EXTRA_TVSHOW_NAME, tvShowName);
@@ -126,8 +132,12 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     }
 
     private void requestContent() {
-        mTvShowDetailsPresenter.requestTvShowDetails(mTvShowId);
-        mTvShowDetailsPresenter.requestSimilarTvShows(mTvShowId);
+        if (mTvShowId != null) {
+            mTvShowDetailsPresenter.requestTvShowDetails(mTvShowId);
+            mTvShowDetailsPresenter.requestSimilarTvShows(mTvShowId);
+        } else {
+            setLoading(false);
+        }
     }
 
     private void getArguments() {
@@ -186,22 +196,27 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
 
     @Override
     public void showDetails(TvShowEntity tvShow) {
-        setLoading(false);
-        String seasons = String.valueOf(tvShow.getNumberOfSeasons());
-        String episodes = String.valueOf(tvShow.getNumberOfEpisodes());
-        String voteAverage = String.valueOf(tvShow.getVoteAverage());
+        if (tvShow != null) {
+            setLoading(false);
+            String overview = tvShow.getOverview();
+            String seasons = String.valueOf(tvShow.getNumberOfSeasons());
+            String episodes = String.valueOf(tvShow.getNumberOfEpisodes());
+            String voteAverage = String.valueOf(tvShow.getVoteAverage());
 
-        mOverview.setText(tvShow.getOverview());
-        mSeasons.setText(seasons);
-        mEpisodes.setText(episodes);
-        mVoteAverage.setText(voteAverage);
+            mOverview.setText(overview);
+            mSeasons.setText(seasons);
+            mEpisodes.setText(episodes);
+            mVoteAverage.setText(voteAverage);
 
-        animateContent();
+            animateContent();
 
-        String imageUrl = ImageUtil.getImageUrl(tvShow, ImageUtil.Type.BACKDROP);
+            String imageUrl = ImageUtil.getImageUrl(tvShow, ImageUtil.Type.BACKDROP);
 
-        if (imageUrl != null) {
-            Picasso.with(this).load(imageUrl).into(mImageTarget);
+            if (imageUrl != null) {
+                Picasso.with(this).load(imageUrl).into(mImageTarget);
+            }
+        } else {
+            showNetworkError();
         }
     }
 
@@ -220,5 +235,6 @@ public class TvShowDetailsActivity extends AppCompatActivity implements TvShowDe
     @Override
     public void showNetworkError() {
         setLoading(false);
+        Snackbar.make(mToolbar, R.string.connection_error, Snackbar.LENGTH_LONG).show();
     }
 }

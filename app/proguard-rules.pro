@@ -16,19 +16,19 @@
 }
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn javax.annotation.**
 
 
 ### OKHTTP 3
 -dontwarn okio.**
 -dontwarn javax.annotation.Nullable
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn okhttp3.internal.platform.**
 
 
 ### GSON
 # Gson specific classes
 -keep class sun.misc.Unsafe { *; }
-# Application classes that will be serialized/deserialized over Gson
--keep com.gvmarc.tvshows.data.entity.** { *; }
 # Prevent proguard from stripping interface information from TypeAdapterFactory,
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
 -keep class * implements com.google.gson.TypeAdapterFactory
