@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--App Color Palette-->
+    <color name="white">#FFF</color>
+    <color name="white_soft">#FAFAFA</color>
+    <color name="grey_dark">#222</color>
+    <color name="grey_soft">#CCC</color>
+    <color name="blue_soft">#8faacf</color>
+    <color name="blue">#4582d7</color>
+    <color name="blue_dark">#2b5794</color>
+    <color name="green_soft">#a9c2a4</color>
+    <color name="green">#50fa82</color>
+    <color name="yellow">#f5e628</color>
+    <color name="red">#c25350</color>
+
+    <!--App theme-->
+    <color name="primary">@color/blue</color>
+    <color name="primaryDark">@color/blue_dark</color>
+    <color name="accent">@color/green</color>
+    <color name="text_primary">@color/grey_dark</color>
+    <color name="background">@color/grey_soft</color>
+    <color name="content_background">@color/white_soft</color>
+
+    <!--Toolbar-->
+    <color name="toolbar_text">@color/white</color>
+    <color name="toolbar_controls">@color/white</color>
+
+    <!--Views-->
+    <color name="tv_show_footer_background">@color/white</color>
+</resources>

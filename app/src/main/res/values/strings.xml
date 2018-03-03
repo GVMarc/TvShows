@@ -1,0 +1,15 @@
+<resources>
+    <!--App-->
+    <string name="app_name">TvShows</string>
+    <string name="connection_error">Connection error</string>
+
+    <!--Activities-->
+    <string name="home_activity">Tv Shows</string>
+
+    <!--Details-->
+    <string name="details_seasons">Seasons:</string>
+    <string name="details_episodes">Episodes:</string>
+    <string name="details_title_similar">Similar tv shows</string>
+    <string name="details_title_overview">Overview</string>
+
+</resources>
